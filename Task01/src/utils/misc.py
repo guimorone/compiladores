@@ -26,15 +26,17 @@ def is_arithmetic(s: str) -> bool:
         return False
 
 
-def exec_operation(op: str) -> None:
-    print(op)
+def exec_operation(op: str) -> float:
     if not is_arithmetic(op):
         raise ValueError('Operação não é aritmética! Não é possível resolver esse cálculo')
 
     value_parsed = ast.parse(op, mode='eval')
+    value = eval(compile(value_parsed, "", "eval"))
 
     print('OPERAÇÃO A SER REALIZADA:', ast.unparse(value_parsed))
-    print('RESULTADO:', eval(compile(value_parsed, "", "eval")))
+    print('RESULTADO:', value)
+
+    return value
 
 
 def isNumber(string: str) -> bool:
