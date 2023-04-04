@@ -1,6 +1,6 @@
-# Task 01 - RPNStacker Adhoc
+# Task 02 - RPNStacker Manual/Simple Scanning
 
-Implementar uma linguagem RPN stacker em Python usando uma pilha como estrutura de dados.
+Evoluir o projeto da Task 01 para implementar uma feature de scanning.
 
 A entrada consiste num arquivo `.stk` (ver arquivo `files/Calc.stk`), onde cada elemento é separado por quebras de linha.
 
