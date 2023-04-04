@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "task02"
+version = "0.1.0"
+description = ""
+authors = ["Guilherme Morone <guimorone@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+
+[tool.black]
+line-length = 120
+skip-string-normalization = true
+
+[build-system]
+requires = ["poetry-core==1.4.2"]
+build-backend = "poetry.core.masonry.api"

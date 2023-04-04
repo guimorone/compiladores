@@ -7,3 +7,4 @@ Cada diretório poderá conter dependências e objetivos diferentes, conforme as
 ## Tasks
 
 - [x] Task 01 - RPNStacker Adhoc
+- [] Task 02 - RPNStacker Manual/Simple Scanning

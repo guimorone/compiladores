@@ -14,19 +14,29 @@ class Task:
     def __stack_is_empty(self) -> bool:
         return not bool(self.stack)
 
-    def exec_op(self, op: str, *nums: str) -> None:
-        if not op or not nums or len(nums) < 2:
-            return
+    def scan_result(self, token_type: str, lexeme: str | float) -> None:
+        print(f'Token [type={token_type}, lexeme={lexeme}]')
 
+    def exec_op(self, op: str, *nums: str) -> None:
         operation = op.join(reversed(nums))
-        self.stack.append(str(misc.exec_operation(operation)))
+        is_arithmetic_op, operator_type = misc.is_arithmetic(operation)
+        if is_arithmetic_op:
+            self.scan_result(token_type=operator_type, lexeme=op)
+            self.stack.append(str(misc.exec_operation(operation)))
+        else:
+            raise ValueError(f'Unexpected character: {op}')
 
     def read_file(self, mode: str = 'r') -> None:
         with open(self.file_path, mode) as f:
+            step = 0
             for line in f:
+                step += 1
+                print('-' * 30, 'STEP', step, '-' * 30)
+
                 # Remover possíveis espaços em branco antes e depois do elemento na linha
                 element = line.strip()
                 if misc.is_number(element):
+                    self.scan_result(token_type='NUM', lexeme=float(element))
                     self.stack.append(element)
                 else:
                     try:
@@ -34,7 +44,12 @@ class Task:
                         num2 = self.stack.pop()
                         self.exec_op(element, num1, num2)
                     except IndexError:
-                        raise SyntaxError(NON_ACCEPTABLE_FILE_ERROR)
+                        is_valid_op = True
+                        # falta tratar esse caso
+                        if is_valid_op:
+                            raise SyntaxError(NON_ACCEPTABLE_FILE_ERROR)
+                        else:
+                            raise ValueError(f'Unexpected character: {element}')
 
     def execute_task(self) -> None:
         self.read_file()
@@ -45,8 +60,8 @@ class Task:
         if not misc.is_number(final_result):
             raise ValueError(f'Valor: {final_result} não pôde ser transformado em número.')
 
-        print('-' * 25, 'RESULTADO FINAL', '-' * 25)
-        print(final_result)
+        print('\n')
+        print('RESULTADO FINAL =', final_result)
 
 
 if __name__ == '__main__':
