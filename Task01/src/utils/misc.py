@@ -39,7 +39,7 @@ def exec_operation(op: str) -> float:
     return value
 
 
-def isNumber(string: str) -> bool:
+def is_number(string: str) -> bool:
     try:
         float(string)
         return True

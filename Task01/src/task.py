@@ -3,6 +3,7 @@ from collections import deque
 from utils import misc
 
 FILE_PATH = 'files/Calc.stk'
+NON_ACCEPTABLE_FILE_ERROR = 'Não foi possível realizar esse cálculo. É bem provável que a formatação do arquivo de entrada esteja errada. Verifique-o e tente novamente!'
 
 
 class Task:
@@ -25,20 +26,23 @@ class Task:
             for line in f:
                 # Remover possíveis espaços em branco antes e depois do elemento na linha
                 element = line.strip()
-                if misc.isNumber(element):
+                if misc.is_number(element):
                     self.stack.append(element)
                 else:
-                    num1 = self.stack.pop()
-                    num2 = self.stack.pop()
-                    self.exec_op(element, num1, num2)
+                    try:
+                        num1 = self.stack.pop()
+                        num2 = self.stack.pop()
+                        self.exec_op(element, num1, num2)
+                    except IndexError:
+                        raise SyntaxError(NON_ACCEPTABLE_FILE_ERROR)
 
     def execute_task(self) -> None:
         self.read_file()
         if self.__stack_is_empty() or len(self.stack) != 1:
-            raise IOError('Não foi possível realizar esse cálculo. Verifique o arquivo de entrada e tente novamente.')
+            raise SyntaxError(NON_ACCEPTABLE_FILE_ERROR)
 
         final_result = self.stack.pop()
-        if not misc.isNumber(final_result):
+        if not misc.is_number(final_result):
             raise ValueError(f'Valor: {final_result} não pôde ser transformado em número.')
 
         print('-' * 25, 'RESULTADO FINAL', '-' * 25)
