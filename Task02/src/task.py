@@ -18,13 +18,18 @@ class Task:
         print(f'Token [type={token_type}, lexeme={lexeme}]')
 
     def exec_op(self, op: str, *nums: str) -> None:
+        if op == '^':
+            op = '**'
+
         operation = op.join(reversed(nums))
         is_arithmetic_op, operator_type = misc.is_arithmetic(operation)
         if is_arithmetic_op:
             self.scan_result(token_type=operator_type, lexeme=op)
             self.stack.append(str(misc.exec_operation(operation)))
         else:
-            raise ValueError(f'Unexpected character: {op}')
+            raise ValueError(
+                f'A operação `{operation}` não é uma operação aritmética válida!', f'Unexpected character: {op}'
+            )
 
     def read_file(self, mode: str = 'r') -> None:
         with open(self.file_path, mode) as f:
@@ -38,18 +43,15 @@ class Task:
                 if misc.is_number(element):
                     self.scan_result(token_type='NUM', lexeme=float(element))
                     self.stack.append(element)
-                else:
+                elif misc.is_operator(element):
                     try:
                         num1 = self.stack.pop()
                         num2 = self.stack.pop()
                         self.exec_op(element, num1, num2)
                     except IndexError:
-                        is_valid_op = True
-                        # falta tratar esse caso
-                        if is_valid_op:
-                            raise SyntaxError(NON_ACCEPTABLE_FILE_ERROR)
-                        else:
-                            raise ValueError(f'Unexpected character: {element}')
+                        raise SyntaxError(NON_ACCEPTABLE_FILE_ERROR)
+                else:
+                    raise ValueError(f'Unexpected character: {element}')
 
     def execute_task(self) -> None:
         self.read_file()

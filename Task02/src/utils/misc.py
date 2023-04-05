@@ -4,6 +4,8 @@ from typing import Any, Tuple
 UNARY_OPS = (ast.UAdd, ast.USub, ast.UnaryOp)
 BINARY_OPS = (ast.Add, ast.Sub, ast.Mult, ast.Div, ast.Pow, ast.Mod)
 
+ALL_OPS = ('+', '-', '*', '/', '^', '**')
+
 
 def is_arithmetic(s: str) -> Tuple[bool, str | None]:
     operator: str | None = None
@@ -42,6 +44,10 @@ def exec_operation(op: str) -> float:
     print('RESULTADO:', value)
 
     return value
+
+
+def is_operator(op: str) -> bool:
+    return op in ALL_OPS
 
 
 def is_number(string: str) -> bool:
