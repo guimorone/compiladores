@@ -36,12 +36,13 @@ def is_arithmetic(s: str) -> Tuple[bool, str | None]:
         return False, None
 
 
-def exec_operation(op: str) -> float:
+def exec_operation(op: str, print_operation: bool = False) -> float:
     value_parsed = ast.parse(op, mode='eval')
     value = eval(compile(value_parsed, "", "eval"))
 
-    print('OPERAÇÃO A SER REALIZADA:', ast.unparse(value_parsed))
-    print('RESULTADO:', value)
+    if print_operation:
+        print('OPERAÇÃO A SER REALIZADA:', ast.unparse(value_parsed))
+        print('RESULTADO:', value)
 
     return value
 

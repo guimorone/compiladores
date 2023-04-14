@@ -1,4 +1,5 @@
 from traceback import print_exc
+from typing import List
 from collections import deque
 from utils import misc
 
@@ -10,12 +11,13 @@ class Task:
     def __init__(self, file_path: str) -> None:
         self.stack: deque = deque()
         self.file_path: str = file_path
+        self.scan_result_list: List[str] = []
 
     def __stack_is_empty(self) -> bool:
         return not bool(self.stack)
 
     def scan_result(self, token_type: str, lexeme: str | float) -> None:
-        print(f'Token [type={token_type}, lexeme={lexeme}]')
+        self.scan_result_list.append(f'Token [type={token_type}, lexeme={lexeme}]')
 
     def exec_op(self, op: str, *nums: str) -> None:
         if op == '^':
@@ -33,11 +35,7 @@ class Task:
 
     def read_file(self, mode: str = 'r') -> None:
         with open(self.file_path, mode) as f:
-            step = 0
             for line in f:
-                step += 1
-                print('-' * 30, 'STEP', step, '-' * 30)
-
                 # Remover possíveis espaços em branco antes e depois do elemento na linha
                 element = line.strip()
                 if misc.is_number(element):
@@ -62,6 +60,8 @@ class Task:
         if not misc.is_number(final_result):
             raise ValueError(f'Valor: {final_result} não pôde ser transformado em número.')
 
+        for sr in self.scan_result_list:
+            print(sr)
         print('\n')
         print('RESULTADO FINAL =', final_result)
 
