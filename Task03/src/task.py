@@ -1,4 +1,4 @@
-from re import compile
+import re
 from traceback import print_exc
 from typing import List, Tuple
 from collections import deque
@@ -15,13 +15,13 @@ class Regex:
         self.element: str = element.strip()
 
     def is_number(self) -> bool:
-        num_regex = compile(r'^\d+(?:,\d*)?$')
+        num_regex = re.compile(r'^[-+]?(?:\d*\.*\d+)$')
         result = num_regex.match(self.element)
 
         return result is not None
 
     def is_operator(self) -> bool:
-        op_regex = compile(rf'^[{ALL_OPS}]$')
+        op_regex = re.compile(rf'^[{ALL_OPS}]$')
         result = op_regex.match(self.element)
 
         return result is not None

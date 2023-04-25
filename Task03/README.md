@@ -4,6 +4,8 @@ Evoluir o projeto da Task 02 para implementar uma feature de scanning usando `Re
 
 A entrada consiste num arquivo `.stk` (ver arquivo `files/Calc.stk`), onde cada elemento é separado por quebras de linha.
 
+_Lembre-se, use `.` para números de ponto flutuante_
+
 Para mudar a entrada sem alterar o código, basta realizar as mudanças diretamente no arquivo citado acima.
 
 ## Dependências
